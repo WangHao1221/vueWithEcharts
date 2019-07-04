@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+    <!-- <script type="text/javascript" src="./china.js"></script> -->
+    <script type="text/javascript" src="./xinjiang.js"></script>
+	<style type="text/css">
+		#myChart{
+			width: 500px;
+			height: 500px;
+		}
+	</style>
+</head>
+<body>
+	<div id="myChart"></div>
+</body>
+<script type="text/javascript">
+
+var geoCoordMap = {
+    "乌鲁木齐":[87.68,43.77],
+    "克拉玛依":[84.77,45.59],
+    "石河子":[85.94,44.27],
+    "吐鲁番":[89.19,42.91],
+    "齐齐哈尔":[123.97,47.33],
+    "托克逊":[88.63,42.77],
+    "鄯善":[90.25,42.82],
+    "哈密":[93.44,42.78],
+    "伊吾":[94.65,43.28],
+    "巴里坤":[93,43.6],
+    "库尔勒":[86.06,41.68],
+    "和静":[86.35,42.31],
+    "和硕":[86.84,42.23],
+    "博湖":[86.53,41.95],
+    "尉梨":[86.24,41.36],
+    "轮台":[84.25,41.77],
+    "焉耆":[86.55,42.05],
+    "和田":[79.94,37.12],
+    "民丰":[82.63,37.07],
+    "策勒":[80.78,37.04],
+    "于田":[81.63,36.86],
+    "洛浦":[80.17,37.12],
+    "皮山":[78.29,37.06],
+    "墨玉":[79.74,37.31],
+    "阿克苏":[80.29,41.15],
+    "温宿":[80.24,41.29],
+    "拜城":[81.84,41.82],
+    "库车":[82.97,41.68],
+    "新和":[82.63,41.55],
+    "沙雅":[82.9,41.25],
+    "阿瓦提":[80.34,40.64],
+    "柯平":[79.06,40.55],
+    "乌什":[79.25,41.22],
+    "咯什":[75.94,39.52],
+    "巴楚":[78.59,39.78],
+    "枷师":[76.78,39.46],
+    "乐普湖":[76.67,39.23],
+    "麦盖提":[77.62,38.95],
+    "莎车":[77.25,38.45],
+    "泽普":[77.26,38.2],
+    "叶城":[77.42,37.89],
+    "疏勒":[76.05,39.41],
+    "英吉沙":[76.17,38.91],
+    "疏附":[75.83,39.42],
+    "塔什库尔干":[75.22,75.22],
+    "阿图什":[76.12,39.73],
+    "阿合奇":[78.42,41.91],
+    "阿克陶":[75.94,39.14],
+    "乌恰":[75.18,39.7],
+    "昌吉":[87.31,44.05],
+    "阜康":[87.94,44.14],
+    "奇台":[89.52,44.02],
+    "吉木萨尔":[89.14,44],
+    "米泉":[87.68,43.97],
+    "玛纳斯":[86.22,44.28],
+    "呼图壁":[86.92,44.18],
+    "木垒":[90.34,43.8],
+    "博乐":[82.1,44.93],
+    "精河":[82.92,44.67],
+    "温泉":[81.08,44.95],
+    "伊宁":[81.33,43.91],
+    "尼勒克":[82.53,43.82],
+    "新源":[83.27,43.41],
+    "巩留":[82.23,43.35],
+    "奎屯":[84.89,44.45],
+    "特克斯":[81.81,43.23],
+    "昭苏":[81.08,43.15],
+    "霍城":[80.87,44.07],
+    "察布察尔":[81.12,43.82],
+    "塔城":[82.96,46.74],
+    "额敏":[83.62,46.52],
+    "乌苏":[84.62,44.45],
+    "托里":[83.59,45.92],
+    "裕民":[82.94,46.21],
+    "沙湾":[85.56,44.29],
+    "和布克赛尔":[85.13,46.78],
+    "阿勒泰":[88.14,47.86],
+    "青河":[90.37,46.71],
+    "富蕴":[89.44,47.05],
+    "福海":[87.51,47.15],
+    "吉木乃":[85.84,47.42],
+    "布尔津":[86.92,47.7],
+    "哈巴河":[86.41,48.05]
+};
+
+var convertData = function (data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        var geoCoord = geoCoordMap[data[i].name];
+        if (geoCoord) {
+            res.push(geoCoord.concat(data[i].value));
+        }
+    }
+    return res;
+};
+var loadData = convertData([
+    {name: "乌鲁木齐", value: 32112},
+    {name: "克拉玛依", value: 44412},
+    {name: "石河子", value: 25123},
+    {name: "吐鲁番", value: 45612},
+    {name: "齐齐哈尔", value: 12512},
+    {name: "托克逊", value: 12512},
+    {name: "鄯善", value: 25121},
+    {name: "哈密", value: 54425},
+    {name: "伊吾", value: 54126},
+    {name: "巴里坤", value: 5226},
+    {name: "库尔勒", value: 56247},
+    {name: "和静", value: 67227},
+    {name: "和硕", value: 35427},
+    {name: "博湖", value: 78327},
+    {name: "尉梨", value: 87628},
+    {name: "轮台", value: 87629},
+    {name: "焉耆", value: 67830},
+    {name: "和田", value: 98730},
+    {name: "民丰", value: 112331},
+    {name: "策勒", value: 113331},
+    {name: "于田", value: 132331},
+    {name: "洛浦", value: 123231},
+    {name: "皮山", value: 154132},
+    {name: "墨玉", value: 56632},
+    {name: "阿克苏", value: 23232},
+    {name: "温宿", value: 12333},
+    {name: "拜城", value: 22333},
+    {name: "库车", value: 32333},
+    {name: "新和", value: 43434},
+    {name: "沙雅", value: 54534},
+    {name: "阿瓦提", value: 64535},
+    {name: "柯平", value: 65435},
+    {name: "乌什", value: 567236},
+    {name: "咯什", value: 567336},
+    {name: "巴楚", value: 67836},
+    {name: "枷师", value: 789436},
+    {name: "乐普湖", value: 898236},
+    {name: "麦盖提", value: 678437},
+    {name: "莎车", value: 56737},
+    {name: "泽普", value: 123337},
+    {name: "叶城", value: 12337},
+    {name: "英吉沙", value: 23437},
+    {name: "疏附", value: 34538},
+    {name: "阿图什", value: 34568},
+    {name: "阿合奇", value: 12138},
+    {name: "阿克陶", value: 32138},
+    {name: "玛纳斯", value: 54139},
+    {name: "哈巴河", value: 56139},
+    {name: "布尔津", value: 67139},
+    {name: "吉木乃", value: 78139},
+    {name: "福海", value: 65440},
+    {name: "富蕴", value: 32340},
+    {name: "青河", value: 44341},
+    {name: "阿勒泰", value: 54341},
+    {name: "和布克赛尔", value: 23442},
+    {name: "裕民", value: 12343},
+    {name: "沙湾", value: 22343}
+]);
+
+option = {
+    backgroundColor: '#404a59',
+    xAxis: {
+        show: false
+    },
+    yAxis: {
+        show: false
+    },
+    visualMap: {
+        type: 'piecewise',
+        min: 20000,
+        max: 100000,
+        calculable: true,
+        realtime: false,
+        splitNumber: 5,
+        inRange: {
+            color: ['#005a88', '#04a4f6', '#00943e', '#fdf40f', '#cf2d14']
+        },
+        right: '10%',
+        bottom: '5%',
+        orient:"vertical1", 
+        inverse:true,  //是否反转 visualMap 组件
+        textStyle: {
+            color: '#fff'
+        }
+    },
+    geo: { // 这个是重点配置区
+      map: '新疆', // 表示中国地图
+      roam: true,
+      itemStyle: {
+        normal: {
+          areaColor: '#081832',
+          borderColor: '#425F91'
+        },
+        emphasis: {
+          areaColor: "#2a333d",
+          shadowOffsetX: 0,
+          shadowOffsetY: 0,
+          shadowBlur: 20,
+          borderWidth: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)'
+        }
+      },
+      silent: true
+    },
+    series: [{
+        name: '',
+        type: 'heatmap',
+        data: loadData,
+        coordinateSystem: 'geo',
+        progressive: 1000,
+        animation: false
+    }]
+};
+var lineChart = echarts.init(document.getElementById('myChart'));
+lineChart.setOption(option);
+</script>
+</html>
